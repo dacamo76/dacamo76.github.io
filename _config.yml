@@ -1,28 +1,28 @@
-title:            Site Title
-description:      Describe your website here.
+title:            Attaining Vision
+description:      Developer notebook of Daniel Alberto Cañas.
 logo:             site-logo.png
 disqus_shortname:
 search:           true
 # Change url to your domain. Leave localhost server or blank when working locally.
 # You don't need to specify the protocol if you want it available on http and https. Example: //localhost:4000
-# url:              http://localhost:4000
+#url:              http://dacamo76.com
 
 # Owner/author information
 owner:
-  name:           Your Name
+  name:           Daniel Alberto Cañas
   avatar:         bio-photo.jpg
-  email:          you@email.com
+  email:          daniel_76@yahoo.com
   # Social networking links used in footer. Update and remove as you like.
-  twitter:
+  twitter:        dacamo76
   facebook:
-  github:
-  stackexchange:
+  github:         dacamo76
+  stackexchange:  74976
   linkedin:
   instagram:
   flickr:
   tumblr:
   # For Google Authorship https://plus.google.com/authorship
-  google_plus:
+  google_plus:    116829273000844440639
 
 # Analytics and webmaster tools stuff goes here
 google_analytics:
@@ -46,8 +46,8 @@ links:
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    America/New_York
 future:      true
-pygments:    true
-#highlighter: pygments
+#pygments:    true
+highlighter: pygments
 markdown:    kramdown
 
 # https://github.com/mojombo/jekyll/wiki/Permalinks
