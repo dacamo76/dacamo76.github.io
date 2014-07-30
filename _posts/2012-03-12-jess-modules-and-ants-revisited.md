@@ -10,7 +10,7 @@ share: true
 
 In my [previous post][last post] I explored the Jess defmodule construct. Experimenting more with defmodules I ran the [simulator source] and got the following result:
 
-~~~
+~~~ bash
 Jess, the Rule Engine for the Java Platform
 Copyright (C) 2008 Sandia Corporation
 Jess Version 7.1p2 11/5/2008
@@ -44,7 +44,7 @@ I thought I found a mistake. On the surface it looks like the ant is gathering f
 
 So the problem must have been in the code. Well, sort of. The problem turned out to be not a problem at all, but a function of the print statements and the order in which certain functions were called. Below is the output of another simulation with similar results, this time with ```(watch all)```.
 
-~~~
+~~~ bash
 FIRE 7 WORK::gather-food f-5
  <== f-5 (MAIN::food-source 3)
 Food item gathered OK
@@ -91,7 +91,7 @@ The rule calls ```change-ant-environment``` before calling ```(gather-food ?food
 
 Now we can follow what was happening in our original output. I will post it here again as reference:
 
-~~~
+~~~ bash
 Jess, the Rule Engine for the Java Platform
 Copyright (C) 2008 Sandia Corporation
 Jess Version 7.1p2 11/5/2008
