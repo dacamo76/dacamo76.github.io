@@ -3,7 +3,7 @@ layout: post
 title: "Installing scikit-learn on Amazon EC2"
 comments: true
 date: 2012-12-07 5:05
-categories: blog
+category: blog
 tags: [python, scipy, numpy, scikit-learn, ec2]
 modified: 2014-01-28
 share: true

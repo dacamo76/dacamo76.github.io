@@ -1,7 +1,7 @@
 ---
 layout: post
 tags : [data mining, open source, rapidminer, java]
-categories: blog
+category: blog
 date: 2011-07-22
 comments: true
 share: true

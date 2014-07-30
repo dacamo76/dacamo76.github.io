@@ -2,7 +2,7 @@
 layout: post
 title: "Running LDA on mahout"
 comments: true
-categories: blog
+category: blog
 tags: [java, mahout, lda, data mining]
 date: 2012-11-11
 published: true

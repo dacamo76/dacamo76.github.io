@@ -1,7 +1,7 @@
 ---
 layout: post
 tags: [data mining, open source , rapidminer, java]
-categories: blog
+category: blog
 title: Embedding RapidMiner as a library in an application (Part II)
 date: 2011-08-21
 comments: true

@@ -2,7 +2,7 @@
 layout: post
 title: "Jess, ants, modules, and conflicts: Revisited"
 comments: true
-categories: blog
+category: blog
 date: 2012-03-12
 tags: [jess, rule engine]
 share: true
