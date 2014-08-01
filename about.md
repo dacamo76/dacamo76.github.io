@@ -1,33 +1,39 @@
 ---
 layout: page
 permalink: /about/
-title: About the Jekyll Theme
-tags: [Jekyll, theme, simple, minimal, minimalism, responsive]
-modified: 2013-09-13
-image:
-  feature: so-simple-sample-image-4.jpg
-  credit: Michael Rose
-  creditlink: http://mademistakes.com
+title: About Me
+modified: 2014-07-31
 ---
 
-Looking for a simple, responsive, theme for your Jekyll powered blog? Well look no further. Here be **So Simple Theme**, the followup to [**Minimal Mistakes**](http://mmistakes.github.io/minimal-mistakes) --- by designer slash illustrator [Michael Rose](http://mademistakes.com).
+This page will always be in a state of flux since I find writing about
+myself rather difficult, the whole idea of having an about page sounds
+pretentious.
+Eventually I hope to have links to stuff that make me look much cooler
+than I really am. Come to think of it, isn't that what a Facebook page is for?
 
-## So Simple Theme is all about:
+Until then, [you'll get nothing and like it](https://www.youtube.com/watch?v=qLdBrx-ijwQ).
 
-* Responsive templates. Looking good on mobile, tablet, and desktop.
-* Gracefully degrading in older browsers. Compatible with Internet Explorer 9+ and all modern browsers.
-* Minimal embellishments and subtle animations. 
-* Readable typography to make your words shine.
-* Support for large images to call out your favorite posts.
-* Disqus comments if you choose to enable.
-* Simple and clear permalink structure[^1].
-* Tags for [Open Graph](https://developers.facebook.com/docs/opengraph/) and [Twitter Cards](https://dev.twitter.com/docs/cards) for a better social sharing experience.
-* Vanilla [custom 404 page]({{ site.url }}/404.html) to get you started.
-* Stylesheets for Pygments and Coderay [syntax highlighting](http://mmistakes.github.io/so-simple-theme/articles/code-highlighting-post/) to make your code examples look snazzy.
-* Simple search that overlays results based on post title.
-* [Grunt build script]({{ site.url }}/theme-setup/index.html#theme-development) for easier theme development.
-* [Sitemap](https://github.com/mmistakes/so-simple-theme/blob/master/sitemap.xml) for search engines
+## Who are you?
 
-<a markdown="0" href="{{ site.url }}/theme-setup" class="btn">Install Minimal Mistakes Theme</a>
+I am the world's foremost expert on [Thomas & Friends](http://ttte.wikia.com/wiki/Thomas_%26_Friends). Seriously. Well, after my son that is.
 
-[^1]: Example: *domain.com/category-name/post-title*
+When not watching talking steam engines,
+I'm a computer scientist who develops data driven applications.
+In true generalist fashion, I have shipped products in C, Java,
+C#, Python, Clojure, and Ruby over the last 10 years.
+
+Recently my interest lies in developing distributed data systems while dabbling
+in functional programming languages and hypermedia APIs.
+
+You can find my (relatively) up to date professional profile on
+[LinkedIn](http:/linkedin.com/in/danielcanas).
+
+## Free Time Stuff
+* huh, what's this free time you speak of?
+* Reading (Another section I should eventually add to this site)
+* Soccer
+
+## Contact Me
+
+I'm on [twitter](http://twitter.com/dacamo76), mostly just an observer,
+but it's the easiest way to get in touch.
