@@ -89,7 +89,7 @@ Creating Attributes
 When creating a model in the RapidMiner GUI, take note of the attribute names, types, and roles. Save the information in a format that is easy to parse as you will need this information to create the attributes in your program. In my implementations, I tend to encode the attribute representations in a CSV string or JSON, both of which are easily created and parsed.
  Let’s say we settled on using JSON, this is a snippet of what a representation might look like:
 
-~~~ json
+{% highlight json %}
     [
       {
          "teamID":
@@ -112,22 +112,22 @@ When creating a model in the RapidMiner GUI, take note of the attribute names, t
               }
        }
     ]
-~~~
+{% endhighlight %}
 
 We parse this in our program and knowing the name, type, and role of each attribute, we can go ahead and create the attributes. In the interest of space in a blog post that is quickly becoming longer than expected, I will try to only post the RapidMiner specific source code. So, I will assume there is an interface
 
-~~~ java
+{% highlight java %}
 interface AttributeRepresentation {
     List<Attribute> newAttributeList();
 }
-~~~
+{% endhighlight %}
 
 with an implementation that takes the JSON string as a constructor parameter. Whenever we need a new instance of the attributes, we call newAttributeList(). Internally, the class uses an [AttributeFactory](http://rapid-i.com/api/rapidminer-4.4/com/rapidminer/example/table/AttributeFactory.html) to create the attributes, the snippet below shows how you would create the teamID and size attributes.
 
-~~~ java
+{% highlight java %}
 Attribute teamID = AttributeFactory.createAttribute("teamID", Ontology.NOMINAL);
 Attribute size = AttributeFactory.createAttribute("size", Ontology.NUMERICAL);
-~~~
+{% endhighlight %}
 
 The rest of the attributes are created in the same way.
 
@@ -138,16 +138,16 @@ Now that we have a list of attributes, let’s see how to define each attribute�
 
 Even if we don’t need the attribute roles just yet, let’s use the JSON representation to select the attributes with special roles to define a map which we’ll later use when creating the example set. An example set expects a map with an Attribute as the key type and String as the value type. The value must correspond to one of the predefined static strings in the [Attributes](http://rapid-i.com/api/rapidminer-5.1/com/rapidminer/example/Attributes.html) interface. (Aside: Wow, how awful were APIs pre Java 1.5?! Seriously, how did programmers get along without Enums. Worse, why are there still new API’s that don’t use enums instead of static final fields ?! I understand legacy API’s, like RapidMiner, but newer API’s ?! Is asking for type safety and a little readability too much? ) All right, cooling off.... ok.. where were we? Thats right, I was talking about the attribute role map. Anyway, the following code shows how to set the role of id to the teamID attribute.
 
-~~~ java
+{% highlight java %}
 Map<Attribute, String> roles = new HashMap<Attribute, String>();
 roles.put(teamID, Attributes.ID_NAME);
-~~~
+{% endhighlight %}
 
 Once we’ve created the attributes and their corresponding roles, we can move on to creating the example table. I’ll continue with the rest of the process in my next post.
 
 For now, our code for creating the attributes and attribute roles should look something like this:
 
-~~~ java
+{% highlight java %}
 final class JSONAttributeRepresentation implements AttributeRepresentation {
 
   private final List<Attribute> attributes;
@@ -170,16 +170,16 @@ final class JSONAttributeRepresentation implements AttributeRepresentation {
     }
     return copy;
 }
-~~~
+{% endhighlight %}
 
 
 The main coding driving the application would then be similar to the following:
 
 
-~~~ java
+{% highlight java %}
 AttributeRepresentation rep = new JSONAttributeRepresentation(Reader jsonReader);
 List<Attributes> attributes = rep.newAttributeList();
 Map<Attribute, String> roles = new HashMap<Attribute, String>();
 Attribute id = attributes.get(0);
 roles.put(id, Attributes.ID_NAME);
-~~~
+{% endhighlight %}

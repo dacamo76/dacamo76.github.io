@@ -49,45 +49,45 @@ For now, let's just get down to installing all these dependencies and start usin
 
 The really daring can run the [full install script](https://gist.github.com/dacamo76/4780765) directly from the gist
 
-~~~ bash
-curl https://gist.github.com/dacamo76/4780765/raw/36acfb10aba554a7738d2fea11d15a31dd8f3a0d/scikit-learn-install.sh | sh
-~~~
+{% highlight shell-session %}
+[ec2-user@ip-10-99-17-223 ~]$ curl https://gist.github.com/dacamo76/4780765/raw/36acfb10aba554a7738d2fea11d15a31dd8f3a0d/scikit-learn-install.sh | sh
+{% endhighlight %}
 
 I'll continue with an explanation of each step in the gist.
 Let's install ATLAS, LAPACK, the Python header files, a c++ compiler.
 
-~~~ bash
+{% highlight shell-session %}
 [ec2-user@ip-10-99-17-223 ~]$ sudo yum install gcc-c++ python27-devel atlas-sse3-devel lapack-devel
-~~~
+{% endhighlight %}
 
 lapack-devel depends on blas-devel which in turn depends on the fortran compiler, so they both pulled in automatically. 
 Next install virtualenv and create a virtual python install to keep all our packages separate from the default machine install.
 
 
-~~~ bash
+{% highlight shell-session %}
 [ec2-user@ip-10-99-17-223 ~]$ wget https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.11.2.tar.gz
 [ec2-user@ip-10-99-17-223 ~]$ tar xzf virtualenv-1.11.2.tar.gz
 [ec2-user@ip-10-99-17-223 ~]$ python27 virtualenv-1.11.2/virtualenv.py sk-learn
 New python executable in sk-learn/bin/python27
 Also creating executable in sk-learn/bin/python
 Installing setuptools, pip...done.
-~~~
+{% endhighlight %}
 Activate the new Python 2.7 virtualenv.
 
-~~~ bash
+{% highlight shell-session %}
 [ec2-user@ip-10-99-17-223 ~]$ . sk-learn/bin/activate
 (sk-learn)[ec2-user@ip-10-99-17-223 ~]$
-~~~
+{% endhighlight %}
 
 Now install numpy, it should find and use the optmized linear algebra libraries.
 
-~~~ bash
+{% highlight shell-session %}
 (sk-learn)[ec2-user@ip-10-99-17-223 ~]$ pip install numpy
-~~~
+{% endhighlight %}
 
 Verify that NumPy found the optmized linear algebra libraries.
 
-~~~ bash
+{% highlight shell-session %}
 (sk-learn)[ec2-user@ip-10-99-17-223 ~]$ python -c "import numpy; numpy.show_config()"
 atlas_threads_info:
     libraries = ['lapack', 'ptf77blas', 'ptcblas', 'atlas']
@@ -119,13 +119,13 @@ blas_mkl_info:
   NOT AVAILABLE
 mkl_info:
   NOT AVAILABLE
-~~~
+{% endhighlight %}
 
 If you don't see output for atlas_threads_info, blas_opt_info, atlas_blas_threads_info, or lapack_opt_info then
 NumPy did not find the ATLAS libraries.
 If you're seeing output similar to the following it's probably not what you want.
 
-~~~ bash
+{% highlight shell-session %}
 (sk-learn)[ec2-user@ip-10-99-17-223 ~]$ python -c "import numpy; numpy.show_config()"
 blas_info:
   NOT AVAILABLE
@@ -153,7 +153,7 @@ atlas_blas_info:
   NOT AVAILABLE
 mkl_info:
   NOT AVAILABLE
-~~~
+{% endhighlight %}
 
 NumPy is installed but will not use the ATLAS libraries.
 At this point it's best to start over from step 1 and make sure atlas-sse3-devel and lapack-devel are installed.
@@ -162,24 +162,24 @@ gets re-installed from scratch and the old version is not lingering around to co
 
 Once NumPy is successfully installed and linked to the ATLAS libraries, continue by installing SciPy and scikit-learn.
 
-~~~ bash
+{% highlight shell-session %}
 (sk-learn)[ec2-user@ip-10-99-17-223 ~]$ pip install scipy
 (sk-learn)[ec2-user@ip-10-99-17-223 ~]$ pip install scikit-learn
-~~~
+{% endhighlight %}
 
 scikit-learn is now installed!!
 Let's run the scikit-learn tests to verify everything is installed correctly.
 Install nose
 
-~~~ bash
+{% highlight shell-session %}
 (sk-learn)[ec2-user@ip-10-99-17-223 ~]$ pip install nose
-~~~
+{% endhighlight %}
 
 and in a directory outside the source run the tests.
 
-~~~ bash
+{% highlight shell-session %}
 (sk-learn)[ec2-user@ip-10-99-17-223 ~]$ nosetests sklearn --exe
-~~~
+{% endhighlight %}
 
 That's it. We now have scikit-learn installed and ready to go on EC2.
 

@@ -26,7 +26,7 @@ With this definition in place, we begin to see how to organize the rules into mo
 
 The threat module is the simplest to implement. When there is an enemy sighting, the ant should go into threat mode. This is accomplished by declaring the rule with the ```auto-focus``` property set to true.
 
-~~~ clojure
+{% highlight cl %}
 (defmodule THREAT)
 (defrule attack-enemy-ant
     (declare (auto-focus TRUE))
@@ -35,24 +35,24 @@ The threat module is the simplest to implement. When there is an enemy sighting,
     (printout t "Enemy appeared... Will attack." crlf)
     (change-ant-environment)
     (attack-ant ?ant))
-~~~
+{% endhighlight %}
 
 When the rule is activated, the threat module is pushed onto the focus stack. Once the rule has fired, if there are no activations in the threat module agenda, i.e. no more enemy ants have appeared, the module pops off the stack and the ant continues with its previous activity before it was so rudely interrupted.
 
 When in work mode, our ant will gather food until food sources are exhausted.
 
-~~~ clojure
+{% highlight cl %}
 (defmodule WORK)
 (defrule gather-food
     ?food <- (food-source ?)
     =>
     (change-ant-environment)
     (gather-food ?food))
-~~~
+{% endhighlight %}
 
 When in chore mode, an ant will dutifully take out the garbage. After taking out the garbage the ant will check and see if more food has appeared via the ```there-is-food``` rule. If no food has appeared, the ant keeps doing its chores.
 
-~~~ clojure
+{% highlight cl %}
 (defmodule CHORE)
 (defrule take-out-garbage
     ?item <-(garbage-source ?)
@@ -66,11 +66,11 @@ When in chore mode, an ant will dutifully take out the garbage. After taking out
     =>
     (printout t "Still food silly.")
     (focus WORK))
-~~~
+{% endhighlight %}
 
 To start the simulation we create a few food sources, add some garbage sources, and push the chore and work module onto the focus stack.
 
-~~~ clojure
+{% highlight cl %}
 (deffacts ant-environment
     (food-source 1)
     (garbage-source 1)
@@ -78,21 +78,20 @@ To start the simulation we create a few food sources, add some garbage sources, 
     (garbage-source 2)
     (food-source 3)
     (food-source 4)
-    (food-source 5)
-    )
+    (food-source 5))
 
 ;; Run our little ant world
 (reset)
 (focus WORK CHORE)
 (run-until-halt)
-~~~
+{% endhighlight %}
 
 Let's see what happens if we run a simple simulation with a static environment, no new food sources and no enemies.
 First, the ant happily gathers all the food sources. With no food left, the food module pops off the focus stack and the chore module gets focus. The ant takes out the garbage until there is no more trash. Once the ant finishes its chores, the chore module pops off the stack and the main module get focus. At this point there are no activations and the simulation ends.
 
 Let's make the simulation little more interesting and in the process catch a glimpse of the power of expert systems in action. The ```(change-ant-environment)``` function randomly changes the environment. A new food source or enemy ant can appear at any moment.
 
-~~~ clojure
+{% highlight cl%}
 ;; Have nature disturb the environment in a few ways
 (deffunction change-ant-environment()
     (if (>= (/ (random) ?*max*) 0.25) then
@@ -100,7 +99,7 @@ Let's make the simulation little more interesting and in the process catch a gli
     (if (>= (/ (random) ?*max*) 0.9) then
         (assert (enemy-ant (gensym*)))
         (printout t "Enemy Ant has appeared." crlf)))
-~~~
+{% endhighlight %}
 
 Now if we run our simulation we should expect our ant to happily gather food until either an enemy ant appears or it runs out of food.
 If an enemy ant appears, the ant will go off to fight. If the ant survives it goes back to gathering food.

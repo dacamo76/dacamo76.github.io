@@ -10,7 +10,7 @@ share: true
 
 In my [previous post][last post] I explored the Jess defmodule construct. Experimenting more with defmodules I ran the [simulator source] and got the following result:
 
-~~~ bash
+{% highlight console %}
 Jess, the Rule Engine for the Java Platform
 Copyright (C) 2008 Sandia Corporation
 Jess Version 7.1p2 11/5/2008
@@ -36,7 +36,7 @@ Enemy appeared... Will attack.
 Enemy Ant has appeared.
 Attacking enemy ant...
 Ant killed by enemy :-( <Fact-17>
-~~~
+{% endhighlight %}
 
 I thought I found a mistake. On the surface it looks like the ant is gathering food before going off to fight the enemy. This doesn't make any sense given that the [Jess documentation](http://www.jessrules.com/jess/docs/71/rules.html) states _when an auto-focus rule is activated, the module it appears in is automatically pushed onto the focus stack and becomes the focus module._ So when an enemy ant appears, the threat module is immediately pushed onto the stack and gains focus. Once the threat module has focus, the ```attack-enemy-ant``` rule fires. To understand why, we must understand that the rule is already on the agenda in the threat module, given that its activation is what caused the activation of the```auto-focus``` property in the first place.
 
@@ -44,7 +44,7 @@ I thought I found a mistake. On the surface it looks like the ant is gathering f
 
 So the problem must have been in the code. Well, sort of. The problem turned out to be not a problem at all, but a function of the print statements and the order in which certain functions were called. Below is the output of another simulation with similar results, this time with ```(watch all)```.
 
-~~~ bash
+{% highlight console %}
 FIRE 7 WORK::gather-food f-5
  <== f-5 (MAIN::food-source 3)
 Food item gathered OK
@@ -68,7 +68,7 @@ Enemy ant killed :-D <Fact-13>
 FIRE 10 WORK::gather-food f-12
  <== f-12 (MAIN::food-source gen16)
 Food item gathered OK
-~~~
+{% endhighlight %}
 
 From this output we can see exactly what is happening and why our output seems to be incorrect when in reality everything is functioning just as it should. In this run of the simulation the ant is in the work module gathering food. In line 4, the ```gather-food``` rule is fired, in the right hand side of the rule the ```change-ant-environment``` function is called which asserts a new food source and an enemy ant.
 Line 5 shows the new food source being asserted and the rule ```gather-food``` being activated on line 6. Line 7 shows the enemy ant asserted and the rule ```attack-enemy-ant``` being activated in the threat module, immediately followed by the threat module gaining focus and conversely the work module losing focus, lines 9 and 10. Then the text "Enemy Ant has appeared." is printed and we fall out of ```change-ant-environment```.
@@ -77,7 +77,7 @@ So now we have two new activations, ```WORK::gather-food``` and ```THREAT::attac
 
 What I had considered a mistake is a consequence of rules calling ```change-ant-environment``` before actually doing the heavy lifting. See the ```gather-food``` rule as and example.
 
-~~~ clojure
+{% highlight cl %}
 (defmodule WORK)
 (defrule gather-food
     ?food <- (food-source ?)
@@ -85,13 +85,13 @@ What I had considered a mistake is a consequence of rules calling ```change-ant-
     (change-ant-environment)
     ;(assert (food-work (gensym*)))
     (gather-food ?food))
-~~~
+{% endhighlight %}
 
 The rule calls ```change-ant-environment``` before calling ```(gather-food ?food)```, this causes the new food sources and enemy ants to appear before our ant gathers the food, giving us the impression that our ant gathers food after an enemy ant appears and before going to fight for the colony.
 
 Now we can follow what was happening in our original output. I will post it here again as reference:
 
-~~~ bash
+{% highlight console %}
 Jess, the Rule Engine for the Java Platform
 Copyright (C) 2008 Sandia Corporation
 Jess Version 7.1p2 11/5/2008
@@ -117,7 +117,7 @@ Enemy appeared... Will attack.
 Enemy Ant has appeared.
 Attacking enemy ant...
 Ant killed by enemy :-( <Fact-17>
-~~~
+{% endhighlight %}
 
 We can see that the ant finished collecting food and was taking out the garbage. While taking out the garbage a new food source appeared and the work module was popped onto the stack, this is evidenced by line 20 text "Still food silly." which is printed in the ```there-is-food``` rule when a new food source appears while in the chore module. (Notice I forgot to add "crlf" in the print statement in the [version](https://gist.github.com/2212515/c3eb0638c72a4b6cc79a2b7553df77b7118674cb#file_there_is_food+rule) I was running at the time.)
 The work module gained focus and the ```gather-food``` rule fired. While in the ```change-ant-environment``` call in the right hand side of the rule, an enemy ant appeared, the output corresponds to the remaining text on line 20. Remember, this entails the threat module receiving focus and the ```attack-enemy-ant``` rule activated in the threat module agenda. The ```gather-food``` runs finishes, outputting line 21, and immediately the ```attack-enemy-ant``` rule is fired, which is seen on line 22.

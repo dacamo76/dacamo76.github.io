@@ -51,7 +51,7 @@ _* The method getMapping() is part of the Attribute interface, so all implementa
 
 Let’s begin by creating the aforementioned DoubleArrayDataRow. First we map each nominal value to a double and create an array of those double values. Then we pass this array to the [DoubleArrayDataRow constructor][2]. An example on how to [manually populate an example table](http://rapid-i.com/wiki/index.php?title=Integrating_RapidMiner_into_your_application#Transform_data_for_RapidMiner) this way can be found in the RapidMiner wiki. Here is the relevant code copied from the wiki. It shows how to create an example table and populate it with data rows. In this specific example, the variable label is a nominal attribute and attributes is a list of Attributes with label as the last element. Every other attribute in the list is a double.
 
-~~~ java
+{% highlight java %}
 // create table
 MemoryExampleTable table = new MemoryExampleTable(attributes);
 // fill table (here: only real values)
@@ -66,7 +66,7 @@ for (int d = 0; d < getMyNumOfDataRows(); d++) {
   // add data row
   table.addDataRow(new DoubleArrayDataRow(data));
 }
-~~~
+{% endhighlight %}
 
 Let’s see if we can follow what’s going on. In line 2 we create the `ExampleTable`.
 The for loop in line 4 loops over all the rows in the input data set.
@@ -99,13 +99,13 @@ It’s difficult looking at all those angle brackets. Welcome to Java!
 Not even the famous so-called [diamond] will clean up the syntax.
 But, we can define a Row interface that represents a `List<String>` and clean up the syntax.
 
-~~~ java
+{% highlight java %}
 public interface Row extends List<String> {}
-~~~
+{% endhighlight %}
 
 So now we can represent our incoming data as a list of rows, `List<Row>`, cleaner code with the added advantage of clearly stating our intent. Assuming the variable inputData contains our incoming list of rows, the code now looks like this.
 
-~~~ java
+{% highlight java %}
 // create table
 MemoryExampleTable table = new MemoryExampleTable(attributes);
 // fill table (here: only real values)
@@ -122,7 +122,7 @@ for (Row row : inputData) {
   // add data row
   table.addDataRow(new DoubleArrayDataRow(data));
 }
-~~~
+{% endhighlight %}
 
 Ok. We got rid of the for loops, but at the expense of adding an index variable whose sole purpose is to keep track of the column index.
 Not good. Let’s eliminate the index. We need to get rid of the array named data and convert it to a List.
@@ -133,7 +133,7 @@ Enter the DataRowFactory
 
 Before diving into the details of the DataRowFactory, let’s show our updated example code with the DataRowFactory.
 
-~~~ java
+{% highlight java %}
 // create table
 MemoryExampleTable table = new MemoryExampleTable(attributes);
 DataRowFactory factory = new DataRowFactory(DataRowFactory.TYPE_DOUBLE_ARRAY, '.');
@@ -147,7 +147,7 @@ for (Row row : inputData) {
 public <T> T[] toArray(List<T> list) {
   return (T[]) list.toArray();
 }
-~~~
+{% endhighlight %}
 
 That looks much better. We don’t need to know or care about nominal value mappings. We create the factory in line 3. The DataRowFactory [constructor][3] takes two arguments. The first is the type of data row. As always, we are using the DoubleArrayDataRow. The second constructor parameter is the decimal point character used in numeric fields. In our example it’s the period, or full stop. Once we create the factory, all that’s left it to iterate over our input data, create the data rows, and add them to the example table. This is shown in lines 4 – 9. The [create()][4] method takes an array of Strings and an array of Attributes as parameters. Line 5 converts a Row into an array and line 6 converts the Attribute list into an array. These arrays are then used in line 7 to create the DataRow which is added to the table in line 8.
 
@@ -158,31 +158,31 @@ Finally, An ExampleSet Sighting
 
 This is the easiest step. In my last post I mentioned [attribute roles][last post] and said we didn’t need to worry about them until we created an example set. Well, now it’s time to use the roles. Let’s rehash the code used to create the roles.
 
-~~~ java
+{% highlight java %}
 Map<Attribute, String> roles = new HashMap<Attribute, String>();
 roles.put(teamID, Attributes.ID_NAME);
-~~~
+{% endhighlight %}
 
 That’s it. Simple, right? Creating the ExampleSet is even easier.
 
-~~~ java
+{% highlight java %}
 ExampleTable table = createExampleTable();
 table.createExampleSet(roles);
-~~~
+{% endhighlight %}
 
 That’s it. We now have an ExampleSet with teamID as the id attribute. The full listing now looks like this.
 
-~~~ java
+{% highlight java %}
 public interface Row extends List<String> {}
-~~~
+{% endhighlight %}
 
-~~~ java
+{% highlight java %}
 public <T> T[] toArray(List<T> list) {
   return (T[]) list.toArray();
 }
-~~~
+{% endhighlight %}
 
-~~~ java
+{% highlight java %}
 Map<Attribute, String> roles = new HashMap<Attribute, String>();
 roles.put(teamID, Attributes.ID_NAME);
 
@@ -195,7 +195,7 @@ for (Row row : inputData) {
   table.addDataRow(dataRow);
 }
 table.createExampleSet(roles);
-~~~
+{% endhighlight %}
 
 You can use this code to create your example sets and continue on with applying your models and all will be good.
 But, if you want to simplify the ExampleTable creation, have more manageable code, and don’t mind getting your hands dirty, read on.
@@ -211,7 +211,7 @@ In my projects I do just that.
 The diff has not been applied in the main RapidMiner core, so if you want to go this route you have to patch the source and compile your own RapidMiner jar.
 After applying the [diff][bug 683 diff], the resulting sample code looks like this:
 
-~~~ java
+{% highlight java %}
 // create table
 MemoryExampleTable table = new MemoryExampleTable(attributes);
 DataRowFactory factory = new DataRowFactory(DataRowFactory.TYPE_DOUBLE_ARRAY, '.');
@@ -219,7 +219,7 @@ for (Row row : inputData) {
   DataRow dataRow = factory.create(row, attributes);
   table.addDataRow(dataRow);
 }
-~~~
+{% endhighlight %}
 
 This code is more compact and easier to reason about.
 You can understand what it’s doing by just looking at it. Try reading it aloud.
@@ -228,7 +228,7 @@ For each row in the input data, use the factory to create a new data row and add
 
 If you don’t feel like compiling your own RapidMiner jar, I uploaded a simple example of a class that [encapsulates the DataRowFactory interface][gist 1] and exposes only a few methods. The gist is a complete working copy with a [usage example][gist 2] and the [expected output][gist 3]. You can [download all the files][gist full] and use it as a replacement for the DataRowFactory. Lines 31 - 35 in the usage example file show how to create an ExampleTable. It is reproduced here.
 
-~~~ java
+{% highlight java %}
 MemoryExampleTable table = new MemoryExampleTable(attributes);
 DataRowFactory2 factory =
         DataRowFactory2.withFullStopDecimalSeparator(attributes);
@@ -236,7 +236,7 @@ for (Row row : inputData) {
   DataRow dataRow = factory.createRow(row);
   table.addDataRow(dataRow);
 }
-~~~
+{% endhighlight %}
 
 The main difference is on lines 2 and 5. In line 2 we create the factory with a more readable, if slightly more verbose, static factory method `DataRowFactory2.withFullStopDecimalSeparator(attributes)`. The method name tells us exactly what kind of factory we are creating, a factory which treats numeric attributes with a ‘.’ as the decimal separator. Besides the [inherent advantages of static factory methods][prefer static factory methods], we get the added bonus of IDE support, the method `.withFullStopDecimalSeparator` will be found during auto-completion, so we can decide right then what type of factory we need, no need to go digging in source files to find `static final int`s to pass as parameters. Finally, line 5 shows how the factory creates a new DataRow from an `Iterable<String>`, we no longer pass in the attributes on every invocation.
 
