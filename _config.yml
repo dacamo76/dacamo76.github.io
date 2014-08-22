@@ -1,4 +1,7 @@
+# Site wide configuration
+
 title:            "Attaining Vision"
+locale: en_US
 description:      "Developer notebook of Daniel Alberto Cañas."
 #logo:             site-logo.png
 disqus_shortname:
@@ -7,47 +10,17 @@ search:           true
 # You don't need to specify the protocol if you want it available on http and https. Example: //localhost:4000
 url:              "http://dacamo76.github.io"
 
-# Owner/author information
-owner:
-  name:           "Daniel Alberto Cañas"
-  avatar:         846bb87e41ead444942607d847fe46a7
-  email:          daniel_76@yahoo.com
-  # Social networking links used in footer. Update and remove as you like.
-  twitter:        dacamo76
-  facebook:
-  github:         dacamo76
-  #stackexchange:  74976
-  stackoverflow:  215199
-  linkedin: danielcanas
-  instagram:
-  flickr:
-  tumblr:
-  # For Google Authorship https://plus.google.com/authorship
-  google_plus:    116829273000844440639
 
-# Analytics and webmaster tools stuff goes here
-google_analytics:
-google_verify:
-# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-bing_verify:
+# Jekyll configuration
 
-# Links to include in top navigation
-# For external links add external: true
-links:
-  - title: About
-    url: /about/
-  - title: Posts
-    url: /posts/
-
-future:      true
-highlighter: pygments
+permalink:  "/:categories/:year/:month/:day/:title/"
 markdown:    kramdown
-
+highlighter: pygments
+sass:
+  sass_dir: _sass
+  style: compressed
 gems:
   - jekyll-sitemap
-
-# https://github.com/mojombo/jekyll/wiki/Permalinks
-permalink:  "/:categories/:year/:month/:day/:title/"
 
 kramdown:
   auto_ids: true
@@ -56,12 +29,28 @@ kramdown:
   toc_levels: "1..6"
   use_coderay: false
 
-  coderay:
-    coderay_line_numbers:
-    coderay_line_numbers_start: 1
-    coderay_tab_width: 4
-    coderay_bold_every: 10
-    coderay_css: class
-
 include: [".htaccess"]
 exclude: ["lib", "config.rb", "Gemfile", "Capfile", "README.md", "LICENSE", "Gemfile.lock", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "vendor"]
+
+
+# Site owner
+owner:
+  name:              "Daniel Alberto Cañas"
+  avatar:            "http://www.gravatar.com/avatar/846bb87e41ead444942607d847fe46a7?s=200&d=mm"
+  email:             daniel_76@yahoo.com
+  disqus-shortname:
+  twitter:           dacamo76
+  facebook: #username
+  github:            dacamo76
+  stackexchange: http://stackoverflow.com/users/215199
+  linkedin: danielcanas
+  instagram: #username
+  flickr: #username
+  tumblr: #username
+  google:
+    plus: 116829273000844440639
+    analytics:
+    verify:
+    ad-client:
+    ad-slot: 
+  bing-verify:

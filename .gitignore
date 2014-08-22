@@ -5,3 +5,9 @@ _site
 codekit-config.json
 node_modules
 Gemfile.lock
+.sass-cache
+
+# Ignore from upstream so-simple theme
+_posts/blog/
+_posts/articles/
+_octopress.yml
