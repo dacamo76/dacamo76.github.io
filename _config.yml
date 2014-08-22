@@ -4,7 +4,6 @@ title:            "Attaining Vision"
 locale: en_US
 description:      "Developer notebook of Daniel Alberto Cañas."
 #logo:             site-logo.png
-disqus_shortname: 
 search:           true
 # Change url to your domain. Leave localhost server or blank when working locally.
 # You don't need to specify the protocol if you want it available on http and https. Example: //localhost:4000
@@ -38,7 +37,7 @@ owner:
   name:              "Daniel Alberto Cañas"
   avatar:            "http://www.gravatar.com/avatar/846bb87e41ead444942607d847fe46a7?s=200&d=mm"
   email:             daniel_76@yahoo.com
-  disqus-shortname:
+  disqus-shortname:  dacamo76
   twitter:           dacamo76
   facebook: #username
   github:            dacamo76
@@ -52,7 +51,7 @@ owner:
     analytics:
     verify:
     ad-client:
-    ad-slot: 
+    ad-slot:
   bing-verify:
 
 defaults:
