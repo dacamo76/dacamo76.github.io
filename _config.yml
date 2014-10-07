@@ -7,7 +7,7 @@ description:      "Developer notebook of Daniel Alberto Cañas."
 search:           true
 # Change url to your domain. Leave localhost server or blank when working locally.
 # You don't need to specify the protocol if you want it available on http and https. Example: //localhost:4000
-url:         "//dacamo76.com"
+url:         "http://dacamo76.com"
 
 
 # Jekyll configuration
